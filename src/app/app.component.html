@@ -1,0 +1,24 @@
+<h1 style="text-align: center">ngx quill</h1>
+
+<form [formGroup]="noticeForm">
+  <quill-editor
+    formControlName="content"
+    placeholder="Write you message..."
+    [modules]="quillConfig"
+    [required]="true"
+    [minLength]="20"
+    [maxLength]="1000"
+    (onEditorCreated)="quillEditorCreated($event)"
+  ></quill-editor>
+  <small *ngIf="noticeForm.get('content')?.errors?.['requiredError']"
+    >this is required</small
+  >
+  <small *ngIf="noticeForm.get('content')?.errors?.['minLengthError']"
+    >minLengthError</small
+  >
+  <small class="count-text" *ngIf="quillEditor"
+    >{{ quillEditor.getLength() - 1 }}/1000</small
+  >
+</form>
+
+<button [disabled]="noticeForm.invalid" (click)="submit()">submit</button>
